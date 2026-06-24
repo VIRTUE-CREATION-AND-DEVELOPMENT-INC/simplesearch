@@ -1,0 +1,23 @@
+@import "./tokens.css";
+@import "./typography.css";
+@import "./motion.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--color-page);
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  color: var(--color-text);
+  background: var(--color-page);
+}
+
+a {
+  color: inherit;
+}

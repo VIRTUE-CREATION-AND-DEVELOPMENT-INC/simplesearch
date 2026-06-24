@@ -1,0 +1,24 @@
+{
+  "name": "simple-search",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "virtue:help": "node .virtue/cli.mjs help",
+    "virtue:status": "node .virtue/cli.mjs status",
+    "virtue:update": "node .virtue/cli.mjs update",
+    "virtue:report": "node .virtue/cli.mjs report"
+  },
+  "dependencies": {
+    "next": "16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9"
+  }
+}

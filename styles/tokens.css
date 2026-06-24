@@ -1,0 +1,7 @@
+:root {
+  --color-page: #ffffff;
+  --color-text: #111827;
+  --color-muted: #4b5563;
+  --color-border: #d1d5db;
+  --space-page: clamp(2rem, 6vw, 5rem);
+}
