@@ -1,0 +1,18 @@
+.section {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.header {
+  max-width: 720px;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.eyebrow {
+  color: var(--color-primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
