@@ -20,4 +20,15 @@ body {
 
 a {
   color: inherit;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+button {
+  color: inherit;
+}
+
+::selection {
+  color: var(--color-heading);
+  background: var(--color-primary-soft);
 }
