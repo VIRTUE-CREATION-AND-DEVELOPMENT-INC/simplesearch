@@ -26,19 +26,37 @@ Simple Search is a Next.js App Router project. Public routes live under `app/(pa
 - Should not collect sensitive user data without a documented backend and privacy decision.
 - If this route receives meaningful static copy, add a route-local `content.js` unless the neighboring route pattern changes.
 
-## Planned Routes
+`/jobs`
+
+- Job search and results template.
+- Planned responsibility: show API-backed Rise / Joinrise results for default browsing and submitted searches.
+- Must include empty, error, and loading behavior once the API client is wired.
+- Must preserve visible Rise / Joinrise attribution and job-level apply/source links.
+- Route-local content lives in `app/(pages)/jobs/content.js`.
 
 `/jobs/[slug]`
 
-- Optional future job detail route.
-- Should be added only if the detail view improves scan quality beyond job cards.
-- Must preserve Rise attribution and job-level apply/source links.
-- Must not render raw HTML descriptions until sanitization and content handling are implemented.
+- Selected job detail template.
+- Planned responsibility: show mapped job details only when the view adds scan value beyond a result card.
+- Must not render raw job description HTML until sanitization and content handling are documented.
+- Must preserve source attribution and original apply/source links.
+- Route-local content lives in `app/(pages)/jobs/[slug]/content.js`.
 
 `/saved`
 
-- Out of scope for the current product direction.
-- Do not add without a documented user-account or local-only saved-jobs decision.
+- Saved jobs empty-state template.
+- Planned responsibility: local-only or documented storage-backed saved jobs if a future Trial approves the feature.
+- Must not imply accounts or server persistence before a storage decision exists.
+- Route-local content lives in `app/(pages)/saved/content.js`.
+
+`/health`
+
+- API readiness and source attribution status template.
+- Planned responsibility: show whether the jobs API client, mapping layer, attribution, and source-link requirements are ready.
+- Should remain operational and source-focused rather than a broad marketing/status page.
+- Route-local content lives in `app/(pages)/health/content.js`.
+
+## Planned Routes
 
 `/employers`, `/post-job`, `/dashboard`
 
