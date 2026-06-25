@@ -3,7 +3,10 @@ import { siteConfig } from "@/lib/config/site";
 const routes = [
   "/",
   "/about",
-  "/contact"
+  "/contact",
+  "/jobs",
+  "/saved",
+  "/health"
 ];
 
 export default function sitemap() {

@@ -1,0 +1,38 @@
+.page {
+  min-height: 100svh;
+  padding: var(--space-page);
+  background:
+    linear-gradient(180deg, rgba(245, 230, 215, 0.62), transparent 20rem),
+    var(--color-page);
+}
+
+.section {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--section-padding) 0;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sourceNote {
+  border-left: 0.25rem solid var(--color-primary);
+  margin: 0;
+  padding: var(--space-4);
+  color: var(--color-muted);
+  background: var(--color-surface);
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: var(--space-4);
+  }
+}

@@ -29,11 +29,13 @@ Documentation checks:
 
 Goals:
 
-- Replace placeholder home copy with Simple Search-specific route content.
+- Replace placeholder public route copy with Simple Search-specific route content.
 - Keep static copy in `app/(pages)/(home)/content.js`.
+- Use route-local `content.js` for meaningful public page copy.
 - Use the shared metadata helper.
 - Preserve route-local CSS module styling.
 - Add visible Rise / Joinrise attribution in the public UI before showing sourced jobs.
+- Provide one-section starting templates for `/`, `/jobs`, `/jobs/[slug]`, `/saved`, `/about`, `/contact`, and `/health`.
 
 Validation:
 
@@ -89,8 +91,8 @@ Additional validation:
 
 Goals:
 
-- Decide whether `/jobs/[slug]` is needed.
-- If added, define sanitization for any full HTML job descriptions.
+- Decide whether the `/jobs/[slug]` template should become a live detail route.
+- Define sanitization for any full HTML job descriptions before rendering them.
 - Preserve apply/source links and Rise attribution.
 
 Validation:
