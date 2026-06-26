@@ -4,7 +4,7 @@ This roadmap defines the expected order of future implementation work. Future Tr
 
 ## Stage 0: Canonical Documentation
 
-Status: current Trial.
+Status: complete.
 
 Goals:
 
@@ -26,6 +26,8 @@ Documentation checks:
 - Docs add no secrets or private API keys.
 
 ## Stage 1: Home Page Product Shell
+
+Status: complete.
 
 Goals:
 
@@ -108,6 +110,8 @@ Additional validation:
 - Raw description rendering is safe or explicitly avoided.
 
 ## Stage 5: Polish And Operational Readiness
+
+Status: current Trial focus.
 
 Goals:
 

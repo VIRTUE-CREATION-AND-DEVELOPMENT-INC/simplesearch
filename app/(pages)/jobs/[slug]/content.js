@@ -1,7 +1,7 @@
 export const jobDetailContent = {
-  title: "Selected job detail template.",
+  title: "Selected job detail.",
   description:
-    "A detail template for one selected Rise-sourced job with clear optional-field handling and apply-source attribution.",
+    "A detail route for one selected Rise-sourced job with clear optional-field handling and apply-source attribution.",
   section: {
     eyebrow: "Job detail",
     title: "Selected job details will stay source-faithful.",

@@ -7,6 +7,7 @@
 }
 
 .section {
+  min-width: 0;
   width: min(var(--container-width), 100%);
   margin: 0 auto;
   display: grid;
@@ -18,6 +19,7 @@
 
 .copy,
 .panel {
+  min-width: 0;
   display: grid;
   gap: var(--space-4);
 }
@@ -76,6 +78,7 @@
 
 .internalLink {
   width: fit-content;
+  max-width: 100%;
   color: var(--color-primary-strong);
   font-weight: 800;
 }

@@ -5,6 +5,7 @@
 }
 
 .section {
+  min-width: 0;
   width: min(var(--container-width), 100%);
   margin: 0 auto;
   display: grid;
@@ -16,6 +17,7 @@
 
 .copy,
 .emptyState {
+  min-width: 0;
   display: grid;
   gap: var(--space-4);
 }
@@ -37,6 +39,7 @@
 .sourceLink,
 .internalLink {
   width: fit-content;
+  max-width: 100%;
   color: var(--color-primary-strong);
   font-weight: 800;
 }

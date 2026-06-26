@@ -47,9 +47,6 @@ function JobsResultsSection() {
         <Link className={styles.internalLink} href="/">
           Start a new search
         </Link>
-        <Link className={styles.internalLink} href="/jobs/example-job">
-          {jobsContent.section.detailAction}
-        </Link>
       </div>
     </section>
   );
