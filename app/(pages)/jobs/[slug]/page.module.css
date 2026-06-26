@@ -60,9 +60,14 @@
 .header,
 .actions,
 .tags {
+  min-width: 0;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+}
+
+.actions > * {
+  flex: 1 1 11rem;
 }
 
 .block {
@@ -102,16 +107,19 @@
 }
 
 .tags span {
+  max-width: 100%;
   border-radius: 999px;
   padding: 0.3rem 0.7rem;
   color: var(--color-muted);
   background: var(--color-page);
   font-size: 0.82rem;
   font-weight: 800;
+  overflow-wrap: anywhere;
 }
 
 .applyLink,
 .saveButton {
+  max-width: 100%;
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
@@ -120,7 +128,8 @@
   border-radius: var(--radius-sm);
   padding: 0 var(--space-5);
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.15;
+  text-align: center;
   text-decoration: none;
   transition:
     background var(--transition-base),
@@ -173,5 +182,13 @@
   .page,
   .panel {
     padding: var(--space-4);
+  }
+
+  .actions {
+    display: grid;
+  }
+
+  .actions > * {
+    width: 100%;
   }
 }

@@ -55,6 +55,7 @@
 
 .primaryAction,
 .secondaryAction {
+  max-width: 100%;
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
@@ -64,6 +65,8 @@
   padding: 0 var(--space-5);
   font: inherit;
   font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
   text-decoration: none;
   cursor: pointer;
 }
@@ -95,6 +98,10 @@
   .page,
   .searchBox {
     padding: var(--space-4);
+  }
+
+  .searchSection {
+    padding: var(--space-10) 0;
   }
 
   .actions {
