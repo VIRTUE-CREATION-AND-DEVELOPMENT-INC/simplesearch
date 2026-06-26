@@ -1,8 +1,10 @@
 import Link from "next/link";
 import styles from "./page.module.css";
 import { jobsContent } from "./content";
+import { SaveJobButton } from "./SaveJobButton";
 import { createPageMetadata } from "@/lib/seo/metadata";
-import { StatusBadge } from "@/components/design-system";
+import { Field, StatusBadge } from "@/components/design-system";
+import { fetchRiseJobs, searchJobs } from "@/lib/jobs/rise";
 
 export const metadata = createPageMetadata({
   title: "Jobs",
@@ -10,44 +12,187 @@ export const metadata = createPageMetadata({
   path: "/jobs",
 });
 
-export default function JobsPage() {
+export default async function JobsPage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
+  const query = normalizeQuery(resolvedSearchParams?.q);
+  const riseResult = await fetchRiseJobs();
+  const visibleJobs = searchJobs(riseResult.jobs, query);
+
   return (
     <main className={styles.page}>
-      <JobsResultsSection />
+      <JobsResultsSection
+        error={riseResult.error}
+        jobs={visibleJobs}
+        query={query}
+        totalCount={riseResult.totalCount || riseResult.jobs.length}
+      />
     </main>
   );
 }
 
-function JobsResultsSection() {
+function JobsResultsSection({ error, jobs, query, totalCount }) {
+  const hasJobs = jobs.length > 0;
+
   return (
     <section className={styles.section}>
       <div className={styles.copy}>
         <p className={styles.eyebrow}>{jobsContent.section.eyebrow}</p>
         <h1>{jobsContent.section.title}</h1>
         <p>{jobsContent.section.description}</p>
-        <a
-          className={styles.sourceLink}
-          href={jobsContent.section.sourceHref}
-          rel="noreferrer"
-          target="_blank"
-        >
-          {jobsContent.section.sourceLabel}
-        </a>
+        <SourceAttribution />
       </div>
 
-      <div className={styles.emptyState}>
-        <StatusBadge tone="neutral">Empty</StatusBadge>
-        <h2>{jobsContent.section.emptyTitle}</h2>
-        <p>{jobsContent.section.emptyDescription}</p>
-        <ul>
-          {jobsContent.section.fields.map((field) => (
-            <li key={field}>{field}</li>
-          ))}
-        </ul>
-        <Link className={styles.internalLink} href="/">
-          Start a new search
-        </Link>
+      <form className={styles.searchPanel} action="/jobs">
+        <Field
+          defaultValue={query}
+          label={jobsContent.section.queryLabel}
+          name="q"
+          placeholder={jobsContent.section.queryPlaceholder}
+          type="search"
+        />
+        <div className={styles.searchActions}>
+          <button className={styles.primaryAction} type="submit">
+            {jobsContent.section.primaryAction}
+          </button>
+          {query ? (
+            <Link className={styles.secondaryAction} href="/jobs">
+              {jobsContent.section.clearAction}
+            </Link>
+          ) : null}
+        </div>
+        <p className={styles.browseNote}>{jobsContent.section.browseNote}</p>
+      </form>
+
+      <div className={styles.resultsHeader}>
+        <StatusBadge tone={error ? "warning" : "success"}>
+          {error ? "API fallback" : "API-backed"}
+        </StatusBadge>
+        <p>{getResultsLabel({ count: jobs.length, query, totalCount })}</p>
       </div>
+
+      {error ? <StatePanel kind="error" /> : null}
+      {!error && !hasJobs ? <StatePanel kind="empty" /> : null}
+
+      {hasJobs ? (
+        <div className={styles.resultsGrid}>
+          {jobs.map((job) => (
+            <JobResultCard job={job} key={job.id} />
+          ))}
+        </div>
+      ) : null}
     </section>
   );
+}
+
+function JobResultCard({ job }) {
+  return (
+    <article className={styles.jobCard}>
+      <div className={styles.jobHeader}>
+        <div>
+          <p className={styles.company}>{job.company}</p>
+          <h2>{job.title}</h2>
+        </div>
+        <StatusBadge tone="neutral">{job.workModel}</StatusBadge>
+      </div>
+
+      <p className={styles.summary}>{job.summary}</p>
+
+      <dl className={styles.meta}>
+        <div>
+          <dt>Location</dt>
+          <dd>{job.location}</dd>
+        </div>
+        <div>
+          <dt>Salary</dt>
+          <dd>{job.salary}</dd>
+        </div>
+        <div>
+          <dt>Posted</dt>
+          <dd>{job.postedAt}</dd>
+        </div>
+        <div>
+          <dt>Department</dt>
+          <dd>{job.department}</dd>
+        </div>
+        <div>
+          <dt>Seniority</dt>
+          <dd>{job.seniority}</dd>
+        </div>
+        <div>
+          <dt>Source</dt>
+          <dd>{job.sourceName}</dd>
+        </div>
+      </dl>
+
+      {job.tags.length ? (
+        <div className={styles.tags} aria-label="Job tags">
+          {job.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
+      ) : null}
+
+      <div className={styles.cardActions}>
+        <a className={styles.applyLink} href={job.sourceUrl} rel="noreferrer" target="_blank">
+          Apply at source
+        </a>
+        <SaveJobButton className={styles.saveButton} jobId={job.id} />
+      </div>
+    </article>
+  );
+}
+
+function StatePanel({ kind }) {
+  const isError = kind === "error";
+
+  return (
+    <div className={styles.emptyState}>
+      <StatusBadge tone={isError ? "warning" : "neutral"}>
+        {isError ? "Unavailable" : "Empty"}
+      </StatusBadge>
+      <h2>{isError ? jobsContent.section.errorTitle : jobsContent.section.emptyTitle}</h2>
+      <p>
+        {isError
+          ? jobsContent.section.errorDescription
+          : jobsContent.section.emptyDescription}
+      </p>
+      <ul>
+        {jobsContent.section.fields.map((field) => (
+          <li key={field}>{field}</li>
+        ))}
+      </ul>
+      <Link className={styles.internalLink} href="/">
+        Start a new search
+      </Link>
+    </div>
+  );
+}
+
+function SourceAttribution() {
+  return (
+    <a
+      className={styles.sourceLink}
+      href={jobsContent.section.sourceHref}
+      rel="noreferrer"
+      target="_blank"
+    >
+      {jobsContent.section.sourceLabel}
+    </a>
+  );
+}
+
+function getResultsLabel({ count, query, totalCount }) {
+  if (query) {
+    return jobsContent.section.searchedResultsLabel
+      .replace("{shown}", String(count))
+      .replace("{query}", query);
+  }
+
+  return jobsContent.section.resultsLabel
+    .replace("{shown}", String(count))
+    .replace("{total}", String(totalCount));
+}
+
+function normalizeQuery(value) {
+  return typeof value === "string" ? value.trim() : "";
 }

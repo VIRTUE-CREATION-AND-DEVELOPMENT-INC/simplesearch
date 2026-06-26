@@ -1,17 +1,28 @@
 export const jobsContent = {
-  title: "Job results prepared for Rise-backed search.",
+  title: "Search Rise-backed job results.",
   description:
-    "A results route for API-backed jobs with source attribution, optional fields, and an empty state ready for unwired data.",
+    "Search or browse API-backed jobs from Rise / Joinrise with source attribution and original apply links.",
   section: {
     eyebrow: "Jobs",
-    title: "Results will land here after the Rise API is connected.",
+    title: "Search current roles from Rise / Joinrise.",
     description:
-      "This route is reserved for searchable jobs from Rise / Joinrise. It keeps the source visible and avoids invented company or salary data.",
+      "Browse recent roles or search by title, company, department, seniority, work model, location, and skills. Optional fields stay explicit when the source does not provide them.",
     sourceLabel: "Jobs sourced from Rise / Joinrise",
     sourceHref: "https://joinrise.co",
-    emptyTitle: "No jobs loaded yet",
+    queryLabel: "Search jobs",
+    queryPlaceholder: "Try engineering, remote, sales, Toronto...",
+    primaryAction: "Search jobs",
+    clearAction: "Clear search",
+    resultsLabel: "Showing {shown} of {total} API-backed jobs",
+    searchedResultsLabel: "Showing {shown} matching jobs for \"{query}\"",
+    browseNote:
+      "Default browsing uses the Rise openjobs endpoint. Search filters the mapped response without inventing missing fields.",
+    emptyTitle: "No matching jobs found",
     emptyDescription:
-      "Connect the jobs API client to show default or searched roles. Until then, keep filters broad and preserve the original apply URL on every result.",
+      "Try a broader title, company, department, seniority, work model, location, or skill. Rise attribution and source links remain visible whenever results render.",
+    errorTitle: "Jobs are temporarily unavailable",
+    errorDescription:
+      "The page shell is ready, but the Rise public jobs endpoint did not return results. Try again shortly.",
     fields: [
       "Title, company, and location",
       "Department, seniority, and work model",
