@@ -76,5 +76,6 @@
 
   .check {
     display: grid;
+    justify-items: start;
   }
 }

@@ -27,6 +27,7 @@ main {
 
 a {
   color: inherit;
+  overflow-wrap: anywhere;
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.18em;
 }
@@ -43,6 +44,7 @@ dd {
 
 button {
   color: inherit;
+  overflow-wrap: anywhere;
 }
 
 ::selection {
