@@ -133,6 +133,9 @@ function JobResultCard({ job }) {
       ) : null}
 
       <div className={styles.cardActions}>
+        <Link className={styles.detailLink} href={`/jobs/${job.detailSlug}`}>
+          View details
+        </Link>
         <a className={styles.applyLink} href={job.sourceUrl} rel="noreferrer" target="_blank">
           Apply at source
         </a>

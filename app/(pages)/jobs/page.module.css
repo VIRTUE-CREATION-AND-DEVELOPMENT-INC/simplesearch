@@ -70,6 +70,7 @@
 }
 
 .primaryAction,
+.detailLink,
 .applyLink,
 .saveButton {
   min-height: 2.75rem;
@@ -101,6 +102,18 @@
 .applyLink:hover {
   background: var(--color-primary-strong);
   border-color: var(--color-primary-strong);
+  transform: translateY(-1px);
+}
+
+.detailLink {
+  color: var(--color-primary-strong);
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary-soft);
+}
+
+.detailLink:hover {
+  border-color: var(--color-primary);
+  background: var(--color-surface-raised);
   transform: translateY(-1px);
 }
 
