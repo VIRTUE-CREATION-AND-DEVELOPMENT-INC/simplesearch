@@ -7,6 +7,7 @@
 }
 
 .searchSection {
+  min-width: 0;
   width: min(var(--container-width), 100%);
   margin: 0 auto;
   display: grid;
@@ -18,6 +19,7 @@
 
 .copy,
 .searchBox {
+  min-width: 0;
   display: grid;
   gap: var(--space-5);
 }
@@ -45,6 +47,7 @@
 }
 
 .actions {
+  min-width: 0;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
@@ -96,5 +99,10 @@
 
   .actions {
     display: grid;
+  }
+
+  .primaryAction,
+  .secondaryAction {
+    width: 100%;
   }
 }

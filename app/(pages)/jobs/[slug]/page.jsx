@@ -4,11 +4,15 @@ import { jobDetailContent } from "./content";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { StatusBadge } from "@/components/design-system";
 
-export const metadata = createPageMetadata({
-  title: "Job Detail",
-  description: jobDetailContent.description,
-  path: "/jobs/example-job",
-});
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+
+  return createPageMetadata({
+    title: "Job Detail",
+    description: jobDetailContent.description,
+    path: `/jobs/${slug}`,
+  });
+}
 
 export default function JobDetailPage() {
   return (
@@ -28,7 +32,7 @@ function JobDetailSection() {
       </div>
 
       <article className={styles.panel}>
-        <StatusBadge tone="neutral">Template</StatusBadge>
+        <StatusBadge tone="neutral">Awaiting data</StatusBadge>
         <h2>{jobDetailContent.section.emptyTitle}</h2>
         <p>{jobDetailContent.section.emptyDescription}</p>
         <dl>

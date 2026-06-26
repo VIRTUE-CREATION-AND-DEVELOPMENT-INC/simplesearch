@@ -1,7 +1,7 @@
 export const healthContent = {
   title: "API readiness and source status.",
   description:
-    "A status template for Simple Search API readiness, Rise / Joinrise attribution, and known unwired states.",
+    "A status route for Simple Search API readiness, Rise / Joinrise attribution, and known unwired states.",
   section: {
     eyebrow: "Status",
     title: "API readiness should be visible before live results ship.",

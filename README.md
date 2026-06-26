@@ -8,7 +8,7 @@ The canonical project documentation lives in `docs/`:
 - `docs/api.md` documents the Rise / Joinrise public jobs API, response fields the app plans to use, and required source attribution.
 - `docs/routes.md` defines current and planned route responsibilities for the Next.js App Router app.
 - `docs/workflow-roadmap.md` defines the expected implementation stages and validation expectations for future Trials, Quests, and Odysseys.
-- `docs/trials/trial-update-simple-search-project-documentation.md` is the active Trial draft for this documentation update.
+- `docs/trial-simple-search-cleanup-pass.md` is the active Trial draft for the current cleanup pass.
 
 ## Source And Attribution
 
