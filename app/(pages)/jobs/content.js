@@ -34,5 +34,22 @@ export const jobsContent = {
       "Salary only when the source provides it",
       "Original apply or Rise source link",
     ],
+    organizer: {
+      organizerLabel: "Saved job organization controls",
+      title: "Saved job organizer",
+      description: "Priority, follow-up, and notes stay local to this browser.",
+      savedLabel: "Saved locally",
+      updatedLabel: "Local metadata saved",
+      priorityLabel: "Priority",
+      followUpLabel: "Follow-up",
+      notesLabel: "Private notes",
+      notesPlaceholder: "Add a short reminder or next step...",
+      unsavedTitle: "Save to organize",
+      unsavedDescription:
+        "Saving this job unlocks local priority, follow-up, and private notes without changing Rise data.",
+      parseErrorTitle: "Saved data could not be read",
+      parseErrorDescription:
+        "The saved jobs storage value is not valid JSON. Existing browser data has not been overwritten.",
+    },
   },
 };

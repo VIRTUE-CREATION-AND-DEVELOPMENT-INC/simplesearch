@@ -4,6 +4,7 @@ import { jobDetailContent } from "./content";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { StatusBadge } from "@/components/design-system";
 import { SaveJobButton } from "../SaveJobButton";
+import { SavedJobOrganizer } from "../SavedJobOrganizer";
 import { fetchRiseJobBySlug } from "@/lib/jobs/rise";
 
 export async function generateMetadata({ params }) {
@@ -100,6 +101,11 @@ function JobDetail({ job }) {
       <TagSection items={job.companyInfo.benefits} title={jobDetailContent.section.benefitsTitle} />
       <TagSection items={job.companyInfo.values} title={jobDetailContent.section.valuesTitle} />
       <TagSection items={job.keywords} title={jobDetailContent.section.keywordsTitle} />
+
+      <section className={styles.block}>
+        <h2>{jobDetailContent.section.organizer.title}</h2>
+        <SavedJobOrganizer content={jobDetailContent.section.organizer} jobId={job.id} />
+      </section>
 
       <div className={styles.actions}>
         <a className={styles.applyLink} href={job.sourceUrl} rel="noreferrer" target="_blank">
