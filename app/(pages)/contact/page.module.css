@@ -28,6 +28,7 @@
   padding: var(--space-4);
   color: var(--color-muted);
   background: var(--color-surface);
+  box-shadow: var(--shadow-card);
 }
 
 @media (max-width: 640px) {

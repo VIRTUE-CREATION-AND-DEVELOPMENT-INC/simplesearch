@@ -1,28 +1,45 @@
 :root {
-  --color-page: #f7f8f4;
+  --color-page: #f5f8ff;
   --color-surface: #ffffff;
-  --color-surface-raised: #fbfcf8;
-  --color-text: #17211b;
-  --color-heading: #0d1712;
-  --color-muted: #59665d;
-  --color-subtle: #748176;
-  --color-border: #d9dfd4;
-  --color-border-strong: #b8c3b1;
-  --color-primary: #245b45;
-  --color-primary-strong: #163b2d;
-  --color-primary-soft: #dfece3;
-  --color-accent: #b96f32;
-  --color-accent-soft: #f5e6d7;
-  --color-info: #2f5f91;
-  --color-info-soft: #e1ebf4;
-  --color-success: #2f6b45;
-  --color-success-soft: #e2f0e6;
-  --color-warning: #8a651f;
-  --color-warning-soft: #f7edcf;
-  --color-danger: #9b3730;
-  --color-danger-soft: #f4dfdd;
-  --shadow-soft: 0 1rem 2.5rem rgba(20, 35, 28, 0.08);
-  --shadow-control: 0 0 0 0.25rem rgba(36, 91, 69, 0.14);
+  --color-surface-raised: #f8fbff;
+  --color-surface-selected: #eaf2ff;
+  --color-surface-disabled: #eef3fb;
+  --color-text: #152033;
+  --color-heading: #071426;
+  --color-muted: #526179;
+  --color-subtle: #74839a;
+  --color-border: #d7e1f0;
+  --color-border-strong: #aebed4;
+  --color-primary: #2563eb;
+  --color-primary-strong: #1d4ed8;
+  --color-primary-soft: #dbeafe;
+  --color-primary-rgb: 37 99 235;
+  --color-accent: #0369a1;
+  --color-accent-soft: #e0f2fe;
+  --color-info: #2563eb;
+  --color-info-soft: #dbeafe;
+  --color-success: #047857;
+  --color-success-soft: #dcfce7;
+  --color-warning: #a16207;
+  --color-warning-soft: #fef3c7;
+  --color-danger: #b42318;
+  --color-danger-soft: #fee4e2;
+  --color-on-primary: #ffffff;
+  --page-gradient-primary: linear-gradient(
+    180deg,
+    rgb(var(--color-primary-rgb) / 0.12),
+    transparent 22rem
+  );
+  --page-gradient-info: linear-gradient(
+    180deg,
+    rgb(var(--color-primary-rgb) / 0.1),
+    transparent 20rem
+  );
+  --surface-overlay: rgb(255 255 255 / 0.9);
+  --surface-overlay-strong: rgb(255 255 255 / 0.96);
+  --shadow-soft: 0 1rem 2.5rem rgb(15 44 89 / 0.08);
+  --shadow-card: 0 0.5rem 1.5rem rgb(15 44 89 / 0.05);
+  --shadow-control: 0 0 0 0.25rem rgb(var(--color-primary-rgb) / 0.16);
   --radius-xs: 0.375rem;
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
