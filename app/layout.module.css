@@ -10,7 +10,7 @@
   min-width: 0;
   padding: var(--space-4) var(--space-page);
   border-bottom: 1px solid var(--color-border);
-  background: rgba(247, 248, 244, 0.92);
+  background: var(--surface-overlay-strong);
   backdrop-filter: blur(12px);
 }
 
@@ -52,6 +52,11 @@
   color: var(--color-primary-strong);
   background: var(--color-primary-soft);
   outline: 0;
+}
+
+.brand:focus-visible,
+.nav a:focus-visible {
+  box-shadow: var(--shadow-control);
 }
 
 @media (max-width: 640px) {
