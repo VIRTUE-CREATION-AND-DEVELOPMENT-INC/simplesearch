@@ -13,6 +13,11 @@ export const savedContent = {
     unavailableTitle: "Saved job records are unavailable",
     unavailableDescription:
       "This browser has saved job IDs, but the current Rise response did not include matching records.",
+    organizerTitle: "Readiness notes",
+    readinessLabel: "Readiness",
+    priorityLabel: "Priority",
+    noteLabel: "Private note",
+    notePlaceholder: "Add a short reminder for this role",
     detailAction: "View details",
     applyAction: "Apply at source",
     action: "Browse jobs",

@@ -1,25 +1,18 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
-
-const STORAGE_KEY = "simple-search:saved-jobs";
-const STORAGE_EVENT = "simple-search:saved-jobs-change";
+import { useMemo, useSyncExternalStore } from "react";
+import {
+  readSavedJobsSnapshot,
+  subscribeToSavedJobs,
+  toggleSavedJob,
+} from "@/lib/jobs/savedJobsStorage";
 
 export function SaveJobButton({ jobId, className = "" }) {
-  const saved = useSyncExternalStore(
-    subscribeToSavedJobs,
-    () => readSavedJobs().includes(jobId),
-    () => false,
-  );
+  const savedSnapshot = useSyncExternalStore(subscribeToSavedJobs, readSavedJobsSnapshot, () => "{}");
+  const saved = useMemo(() => readSavedJobIds(savedSnapshot).includes(jobId), [jobId, savedSnapshot]);
 
   function toggleSaved() {
-    const savedJobs = readSavedJobs();
-    const nextSaved = savedJobs.includes(jobId)
-      ? savedJobs.filter((savedJobId) => savedJobId !== jobId)
-      : [...savedJobs, jobId];
-
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextSaved));
-    window.dispatchEvent(new Event(STORAGE_EVENT));
+    toggleSavedJob(jobId);
   }
 
   return (
@@ -34,24 +27,10 @@ export function SaveJobButton({ jobId, className = "" }) {
   );
 }
 
-function subscribeToSavedJobs(callback) {
-  window.addEventListener("storage", callback);
-  window.addEventListener(STORAGE_EVENT, callback);
-
-  return () => {
-    window.removeEventListener("storage", callback);
-    window.removeEventListener(STORAGE_EVENT, callback);
-  };
-}
-
-function readSavedJobs() {
-  if (typeof window === "undefined") {
-    return [];
-  }
-
+function readSavedJobIds(snapshot) {
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "[]");
-    return Array.isArray(parsed) ? parsed.filter((item) => typeof item === "string") : [];
+    const parsed = JSON.parse(snapshot);
+    return Array.isArray(parsed?.ids) ? parsed.ids.filter((item) => typeof item === "string") : [];
   } catch {
     return [];
   }
