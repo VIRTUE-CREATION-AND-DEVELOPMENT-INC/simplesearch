@@ -18,12 +18,35 @@ import styles from "./page.module.css";
 
 const ALL_PRIORITIES = "all";
 const ALL_STATES = "all";
+const SORT_RECENT = "recent";
+
+const SORT_OPTIONS = [
+  { value: SORT_RECENT, contentKey: "sortRecent" },
+  { value: "saved", contentKey: "sortSaved" },
+  { value: "priority", contentKey: "sortPriority" },
+  { value: "follow-up", contentKey: "sortFollowUp" },
+  { value: "company", contentKey: "sortCompany" },
+];
+
+const PRIORITY_RANK = {
+  high: 0,
+  normal: 1,
+  low: 2,
+};
+
+const FOLLOW_UP_RANK = {
+  "follow-up": 0,
+  "not-started": 1,
+  applied: 2,
+  closed: 3,
+};
 
 export function SavedJobsList({ content, jobs }) {
   const savedSnapshot = useSyncExternalStore(subscribeToSavedJobs, readSavedJobsSnapshot, () => "[]");
   const savedState = useMemo(() => parseSavedJobsSnapshot(savedSnapshot), [savedSnapshot]);
   const [priorityFilter, setPriorityFilter] = useState(ALL_PRIORITIES);
   const [stateFilter, setStateFilter] = useState(ALL_STATES);
+  const [sortBy, setSortBy] = useState(SORT_RECENT);
   const jobById = useMemo(() => new Map(jobs.map((job) => [job.id, job])), [jobs]);
 
   useEffect(() => {
@@ -43,6 +66,7 @@ export function SavedJobsList({ content, jobs }) {
 
     return matchesPriority && matchesState;
   });
+  const sortedRecords = sortSavedRecords(filteredRecords, sortBy);
 
   if (savedState.parseError) {
     return (
@@ -72,9 +96,14 @@ export function SavedJobsList({ content, jobs }) {
           content={content}
           onPriorityChange={setPriorityFilter}
           onReset={resetFilters}
+          onSortChange={setSortBy}
           onStateChange={setStateFilter}
           priorityFilter={priorityFilter}
+          savedCount={savedRecords.length}
+          shownCount={0}
+          sortBy={sortBy}
           stateFilter={stateFilter}
+          unavailableCount={unavailableRecords.length}
         />
         <UnavailablePanel content={content} records={unavailableRecords} />
       </div>
@@ -87,14 +116,19 @@ export function SavedJobsList({ content, jobs }) {
         content={content}
         onPriorityChange={setPriorityFilter}
         onReset={resetFilters}
+        onSortChange={setSortBy}
         onStateChange={setStateFilter}
         priorityFilter={priorityFilter}
+        savedCount={savedRecords.length}
+        shownCount={filteredRecords.length}
+        sortBy={sortBy}
         stateFilter={stateFilter}
+        unavailableCount={unavailableRecords.length}
       />
 
-      {filteredRecords.length ? (
+      {sortedRecords.length ? (
         <div className={styles.savedList}>
-          {filteredRecords.map(({ job, record }) => (
+          {sortedRecords.map(({ job, record }) => (
             <SavedJobCard content={content} job={job} key={record.id} record={record} />
           ))}
         </div>
@@ -117,6 +151,7 @@ export function SavedJobsList({ content, jobs }) {
   function resetFilters() {
     setPriorityFilter(ALL_PRIORITIES);
     setStateFilter(ALL_STATES);
+    setSortBy(SORT_RECENT);
   }
 }
 
@@ -124,17 +159,37 @@ function SavedToolbar({
   content,
   onPriorityChange,
   onReset,
+  onSortChange,
   onStateChange,
   priorityFilter,
+  savedCount,
+  shownCount,
+  sortBy,
   stateFilter,
+  unavailableCount,
 }) {
-  const hasFilters = priorityFilter !== ALL_PRIORITIES || stateFilter !== ALL_STATES;
+  const hasFilters =
+    priorityFilter !== ALL_PRIORITIES || stateFilter !== ALL_STATES || sortBy !== SORT_RECENT;
 
   return (
     <div className={styles.toolbar}>
       <div>
         <h2>{content.filterTitle}</h2>
         <p>{content.filterDescription}</p>
+        <dl className={styles.summaryStats} aria-label="Saved jobs summary">
+          <div>
+            <dt>{content.savedCountLabel}</dt>
+            <dd>{savedCount}</dd>
+          </div>
+          <div>
+            <dt>{content.visibleCountLabel}</dt>
+            <dd>{shownCount}</dd>
+          </div>
+          <div>
+            <dt>{content.unavailableCountLabel}</dt>
+            <dd>{unavailableCount}</dd>
+          </div>
+        </dl>
       </div>
       <div className={styles.filterControls}>
         <label className={styles.selectField}>
@@ -155,6 +210,16 @@ function SavedToolbar({
             {FOLLOW_UP_OPTIONS.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className={styles.selectField}>
+          <span>{content.sortLabel}</span>
+          <select value={sortBy} onChange={(event) => onSortChange(event.target.value)}>
+            {SORT_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {content[option.contentKey]}
               </option>
             ))}
           </select>
@@ -195,6 +260,12 @@ function SavedJobCard({ content, job, record }) {
         <Detail label="Location" value={job.location} />
         <Detail label="Salary" value={job.salary} />
         <Detail label="Source" value={job.sourceName} />
+        <Detail label={content.savedDateLabel} value={formatSavedDate(record.createdAt)} />
+        <Detail label={content.editedDateLabel} value={formatSavedDate(record.updatedAt)} />
+        <Detail
+          label={content.followUpLabel}
+          value={getOptionLabel(FOLLOW_UP_OPTIONS, record.metadata.followUpState)}
+        />
       </dl>
 
       <div className={styles.organizer}>
@@ -320,6 +391,51 @@ function getPriorityTone(priority) {
   }
 
   return "neutral";
+}
+
+function sortSavedRecords(records, sortBy) {
+  return [...records].sort((left, right) => {
+    if (sortBy === "saved") {
+      return compareDates(right.record.createdAt, left.record.createdAt);
+    }
+
+    if (sortBy === "priority") {
+      return compareRank(
+        PRIORITY_RANK[left.record.metadata.priority],
+        PRIORITY_RANK[right.record.metadata.priority],
+      ) || compareDates(right.record.updatedAt, left.record.updatedAt);
+    }
+
+    if (sortBy === "follow-up") {
+      return compareRank(
+        FOLLOW_UP_RANK[left.record.metadata.followUpState],
+        FOLLOW_UP_RANK[right.record.metadata.followUpState],
+      ) || compareDates(right.record.updatedAt, left.record.updatedAt);
+    }
+
+    if (sortBy === "company") {
+      return (
+        left.job.company.localeCompare(right.job.company) ||
+        left.job.title.localeCompare(right.job.title)
+      );
+    }
+
+    return compareDates(right.record.updatedAt, left.record.updatedAt);
+  });
+}
+
+function compareRank(left, right) {
+  return (left ?? Number.MAX_SAFE_INTEGER) - (right ?? Number.MAX_SAFE_INTEGER);
+}
+
+function compareDates(left, right) {
+  return dateValue(left) - dateValue(right);
+}
+
+function dateValue(value) {
+  const date = new Date(value);
+
+  return Number.isNaN(date.getTime()) ? 0 : date.getTime();
 }
 
 function formatSavedDate(value) {
