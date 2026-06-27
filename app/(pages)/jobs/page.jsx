@@ -2,6 +2,7 @@ import Link from "next/link";
 import styles from "./page.module.css";
 import { jobsContent } from "./content";
 import { SaveJobButton } from "./SaveJobButton";
+import { SavedJobOrganizer } from "./SavedJobOrganizer";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { Field, StatusBadge } from "@/components/design-system";
 import { fetchRiseJobs } from "@/lib/jobs/rise";
@@ -174,6 +175,12 @@ function JobResultCard({ job }) {
           ))}
         </div>
       ) : null}
+
+      <SavedJobOrganizer
+        content={jobsContent.section.organizer}
+        jobId={job.id}
+        size="compact"
+      />
 
       <div className={styles.cardActions}>
         <Link className={styles.detailLink} href={`/jobs/${job.detailSlug}`}>
