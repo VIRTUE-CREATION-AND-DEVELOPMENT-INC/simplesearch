@@ -4,7 +4,7 @@ import { jobsContent } from "./content";
 import { SaveJobButton } from "./SaveJobButton";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { Field, StatusBadge } from "@/components/design-system";
-import { fetchRiseJobs, searchJobs } from "@/lib/jobs/rise";
+import { fetchRiseJobs } from "@/lib/jobs/rise";
 
 export const metadata = createPageMetadata({
   title: "Jobs",
@@ -15,22 +15,23 @@ export const metadata = createPageMetadata({
 export default async function JobsPage({ searchParams }) {
   const resolvedSearchParams = await searchParams;
   const query = normalizeQuery(resolvedSearchParams?.q);
-  const riseResult = await fetchRiseJobs();
-  const visibleJobs = searchJobs(riseResult.jobs, query);
+  const riseResult = await fetchRiseJobs({ query });
 
   return (
     <main className={styles.page}>
       <JobsResultsSection
         error={riseResult.error}
-        jobs={visibleJobs}
+        jobs={riseResult.jobs}
         query={query}
+        searchUnavailable={riseResult.searchUnavailable}
         totalCount={riseResult.totalCount || riseResult.jobs.length}
+        warning={riseResult.warning}
       />
     </main>
   );
 }
 
-function JobsResultsSection({ error, jobs, query, totalCount }) {
+function JobsResultsSection({ error, jobs, query, searchUnavailable, totalCount, warning }) {
   const hasJobs = jobs.length > 0;
 
   return (
@@ -64,14 +65,17 @@ function JobsResultsSection({ error, jobs, query, totalCount }) {
       </form>
 
       <div className={styles.resultsHeader}>
-        <StatusBadge tone={error ? "warning" : "success"}>
-          {error ? "API fallback" : "API-backed"}
+        <StatusBadge tone={error || searchUnavailable ? "warning" : "success"}>
+          {getStatusLabel({ error, searchUnavailable })}
         </StatusBadge>
-        <p>{getResultsLabel({ count: jobs.length, query, totalCount })}</p>
+        <p>{getResultsLabel({ count: jobs.length, query, searchUnavailable, totalCount })}</p>
       </div>
 
+      {warning && hasJobs ? <NoticePanel message={warning} /> : null}
       {error ? <StatePanel kind="error" /> : null}
-      {!error && !hasJobs ? <StatePanel kind="empty" /> : null}
+      {!error && !hasJobs ? (
+        <StatePanel kind={searchUnavailable ? "searchUnavailable" : "empty"} />
+      ) : null}
 
       {hasJobs ? (
         <div className={styles.resultsGrid}>
@@ -81,6 +85,15 @@ function JobsResultsSection({ error, jobs, query, totalCount }) {
         </div>
       ) : null}
     </section>
+  );
+}
+
+function NoticePanel({ message }) {
+  return (
+    <div className={styles.noticePanel}>
+      <StatusBadge tone="warning">Fallback</StatusBadge>
+      <p>{message}</p>
+    </div>
   );
 }
 
@@ -147,17 +160,26 @@ function JobResultCard({ job }) {
 
 function StatePanel({ kind }) {
   const isError = kind === "error";
+  const isSearchUnavailable = kind === "searchUnavailable";
 
   return (
     <div className={styles.emptyState}>
-      <StatusBadge tone={isError ? "warning" : "neutral"}>
-        {isError ? "Unavailable" : "Empty"}
+      <StatusBadge tone={isError || isSearchUnavailable ? "warning" : "neutral"}>
+        {isError || isSearchUnavailable ? "Unavailable" : "Empty"}
       </StatusBadge>
-      <h2>{isError ? jobsContent.section.errorTitle : jobsContent.section.emptyTitle}</h2>
+      <h2>
+        {isError
+          ? jobsContent.section.errorTitle
+          : isSearchUnavailable
+            ? jobsContent.section.searchUnavailableTitle
+            : jobsContent.section.emptyTitle}
+      </h2>
       <p>
         {isError
           ? jobsContent.section.errorDescription
-          : jobsContent.section.emptyDescription}
+          : isSearchUnavailable
+            ? jobsContent.section.searchUnavailableDescription
+            : jobsContent.section.emptyDescription}
       </p>
       <ul>
         {jobsContent.section.fields.map((field) => (
@@ -184,9 +206,13 @@ function SourceAttribution() {
   );
 }
 
-function getResultsLabel({ count, query, totalCount }) {
+function getResultsLabel({ count, query, searchUnavailable, totalCount }) {
   if (query) {
-    return jobsContent.section.searchedResultsLabel
+    const label = searchUnavailable
+      ? jobsContent.section.fallbackResultsLabel
+      : jobsContent.section.searchedResultsLabel;
+
+    return label
       .replace("{shown}", String(count))
       .replace("{query}", query);
   }
@@ -194,6 +220,18 @@ function getResultsLabel({ count, query, totalCount }) {
   return jobsContent.section.resultsLabel
     .replace("{shown}", String(count))
     .replace("{total}", String(totalCount));
+}
+
+function getStatusLabel({ error, searchUnavailable }) {
+  if (error) {
+    return "API unavailable";
+  }
+
+  if (searchUnavailable) {
+    return "Search fallback";
+  }
+
+  return "API-backed";
 }
 
 function normalizeQuery(value) {
