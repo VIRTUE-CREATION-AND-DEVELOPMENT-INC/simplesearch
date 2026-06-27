@@ -14,6 +14,23 @@ export const savedContent = {
     unavailableDescription:
       "This browser has saved job IDs, but the current Rise response did not include matching records.",
     organizerTitle: "Readiness notes",
+    workspaceTitle: "Saved workspace",
+    workspaceDescription:
+      "Scan saved roles by readiness and priority, then group the list around the next decision to make.",
+    summaryTotal: "Saved roles",
+    summaryReady: "Ready to apply",
+    summaryHighPriority: "High priority",
+    filterReadinessLabel: "Filter readiness",
+    filterPriorityLabel: "Filter priority",
+    groupByLabel: "Group by",
+    allReadinessOption: "All readiness states",
+    allPriorityOption: "All priorities",
+    groupNoneOption: "No grouping",
+    groupReadinessOption: "Readiness",
+    groupPriorityOption: "Priority",
+    filteredEmptyTitle: "No saved roles match these filters",
+    filteredEmptyDescription:
+      "Clear one filter or switch grouping to scan a broader saved-job set.",
     readinessLabel: "Readiness",
     priorityLabel: "Priority",
     noteLabel: "Private note",
