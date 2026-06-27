@@ -22,7 +22,19 @@ Observed search-style endpoint used by the public Rise jobs surface:
 GET https://api.joinrise.co/api/v1/jobs/elastic
 ```
 
-The app should start with `openjobs` unless a future implementation Trial verifies and documents the exact query parameters needed for `elastic`.
+Verified search request:
+
+```txt
+GET https://api.joinrise.co/api/v1/jobs/elastic?search={query}&limit=50
+```
+
+Verified open jobs pagination:
+
+```txt
+GET https://api.joinrise.co/api/v1/jobs/openjobs?page={page}&limit=50
+```
+
+`openjobs` defaults to 20 jobs and accepts `page`. The observed maximum effective `limit` is 50. `skip` did not change the observed page. For submitted searches, Simple Search should prefer `jobs/elastic?search=` and only fall back to paginated `openjobs` plus local matching when the search endpoint is unavailable or inaccessible. Default browse mode should continue to use recent `openjobs` results.
 
 ## Attribution Requirement
 
