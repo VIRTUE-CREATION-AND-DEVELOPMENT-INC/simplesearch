@@ -23,5 +23,7 @@ export const jobDetailContent = {
     applyAction: "Apply through Rise source",
     backAction: "Back to jobs",
     sourceLabel: "Source attribution: Rise / Joinrise",
+    readinessTitle: "Saved job readiness",
+    readinessLabel: "Readiness",
   },
 };

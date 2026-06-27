@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "./page.module.css";
 import { jobsContent } from "./content";
+import { JobReadinessControls } from "./JobReadinessControls";
 import { SaveJobButton } from "./SaveJobButton";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { Field, StatusBadge } from "@/components/design-system";
@@ -144,6 +145,12 @@ function JobResultCard({ job }) {
           ))}
         </div>
       ) : null}
+
+      <JobReadinessControls
+        content={jobsContent.section}
+        jobId={job.id}
+        styles={styles}
+      />
 
       <div className={styles.cardActions}>
         <Link className={styles.detailLink} href={`/jobs/${job.detailSlug}`}>

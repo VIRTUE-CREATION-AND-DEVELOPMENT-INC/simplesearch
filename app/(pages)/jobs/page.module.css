@@ -251,6 +251,59 @@
   overflow-wrap: anywhere;
 }
 
+.readinessPanel {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: max-content minmax(12rem, 1fr);
+  gap: var(--space-3);
+  align-items: end;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+}
+
+.readinessBadge {
+  max-width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-primary-strong);
+  background: var(--color-primary-soft);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+
+.readinessField {
+  min-width: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.readinessField label {
+  color: var(--color-subtle);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.readinessField select {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  color: var(--color-heading);
+  background: var(--color-surface-raised);
+  font: inherit;
+  font-weight: 700;
+}
+
+.readinessField select:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-control);
+  outline-offset: 2px;
+}
+
 .emptyState h2 {
   font-size: clamp(1.4rem, 2vw, 1.9rem);
 }
@@ -287,7 +340,8 @@
   }
 
   .jobHeader,
-  .meta {
+  .meta,
+  .readinessPanel {
     grid-template-columns: 1fr;
   }
 

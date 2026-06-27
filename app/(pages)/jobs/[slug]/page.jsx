@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import { jobDetailContent } from "./content";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { StatusBadge } from "@/components/design-system";
+import { JobReadinessControls } from "../JobReadinessControls";
 import { SaveJobButton } from "../SaveJobButton";
 import { fetchRiseJobBySlug } from "@/lib/jobs/rise";
 
@@ -72,6 +73,12 @@ function JobDetail({ job }) {
         <h2>{jobDetailContent.section.summaryTitle}</h2>
         <p>{job.summary}</p>
       </section>
+
+      <JobReadinessControls
+        content={jobDetailContent.section}
+        jobId={job.id}
+        styles={styles}
+      />
 
       <section className={styles.block}>
         <h2>{jobDetailContent.section.roleDetailsTitle}</h2>

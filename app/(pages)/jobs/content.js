@@ -34,5 +34,7 @@ export const jobsContent = {
       "Salary only when the source provides it",
       "Original apply or Rise source link",
     ],
+    readinessTitle: "Saved job readiness",
+    readinessLabel: "Readiness",
   },
 };
