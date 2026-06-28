@@ -39,18 +39,18 @@ export const jobsContent = {
       "Original apply or Rise source link",
     ],
     organizer: {
-      organizerLabel: "Saved job organization controls",
-      title: "Saved job organizer",
-      description: "Priority, follow-up, and notes stay local to this browser.",
+      organizerLabel: "Saved job readiness controls",
+      title: "Saved job readiness",
+      description: "Priority, readiness, and notes stay local to this browser.",
       savedLabel: "Saved locally",
       updatedLabel: "Local metadata saved",
       priorityLabel: "Priority",
-      followUpLabel: "Follow-up",
+      followUpLabel: "Readiness",
       notesLabel: "Private notes",
       notesPlaceholder: "Add a short reminder or next step...",
       unsavedTitle: "Save to organize",
       unsavedDescription:
-        "Saving this job unlocks local priority, follow-up, and private notes without changing Rise data.",
+        "Saving this job unlocks local priority, readiness, and private notes without changing Rise data.",
       parseErrorTitle: "Saved data could not be read",
       parseErrorDescription:
         "The saved jobs storage value is not valid JSON. Existing browser data has not been overwritten.",

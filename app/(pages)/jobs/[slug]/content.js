@@ -24,19 +24,19 @@ export const jobDetailContent = {
     backAction: "Back to jobs",
     sourceLabel: "Source attribution: Rise / Joinrise",
     organizer: {
-      organizerLabel: "Saved job organization controls",
-      title: "Saved job organizer",
+      organizerLabel: "Saved job readiness controls",
+      title: "Saved job readiness",
       description:
-        "Keep local priority, follow-up state, and notes separate from the Rise job record.",
+        "Keep local priority, readiness state, and notes separate from the Rise job record.",
       savedLabel: "Saved locally",
       updatedLabel: "Local metadata saved",
       priorityLabel: "Priority",
-      followUpLabel: "Follow-up",
+      followUpLabel: "Readiness",
       notesLabel: "Private notes",
       notesPlaceholder: "Add interview prep, questions, or application timing...",
       unsavedTitle: "Save this job to organize it",
       unsavedDescription:
-        "Use the save button to add browser-only priority, follow-up, and notes for this role.",
+        "Use the save button to add browser-only priority, readiness, and notes for this role.",
       parseErrorTitle: "Saved data could not be read",
       parseErrorDescription:
         "The saved jobs storage value is not valid JSON. Existing browser data has not been overwritten.",
