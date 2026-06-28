@@ -40,7 +40,7 @@
 .control:disabled {
   cursor: not-allowed;
   color: var(--color-subtle);
-  background: #eef1eb;
+  background: var(--color-surface-disabled);
 }
 
 .hint {

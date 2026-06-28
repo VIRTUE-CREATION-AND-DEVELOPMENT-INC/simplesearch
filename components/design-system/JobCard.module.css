@@ -5,7 +5,7 @@
   border-radius: var(--radius-md);
   padding: var(--space-5);
   background: var(--color-surface);
-  box-shadow: 0 0.5rem 1.5rem rgba(20, 35, 28, 0.04);
+  box-shadow: var(--shadow-card);
   transition:
     border-color var(--transition-base),
     box-shadow var(--transition-base),
@@ -20,6 +20,7 @@
 
 .selected {
   border-color: var(--color-primary);
+  background: var(--color-surface-selected);
   box-shadow: var(--shadow-control);
 }
 
@@ -79,8 +80,8 @@
 .tags span {
   border-radius: 999px;
   padding: 0.25rem 0.6rem;
-  color: var(--color-muted);
-  background: var(--color-page);
+  color: var(--color-primary-strong);
+  background: var(--color-primary-soft);
   font-size: 0.78rem;
   font-weight: 700;
 }

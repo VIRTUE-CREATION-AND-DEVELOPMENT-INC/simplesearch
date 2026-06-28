@@ -22,24 +22,24 @@
 
 .success {
   --badge-bg: var(--color-success-soft);
-  --badge-border: rgba(47, 107, 69, 0.2);
+  --badge-border: color-mix(in srgb, var(--color-success) 22%, transparent);
   --badge-text: var(--color-success);
 }
 
 .warning {
   --badge-bg: var(--color-warning-soft);
-  --badge-border: rgba(138, 101, 31, 0.25);
+  --badge-border: color-mix(in srgb, var(--color-warning) 26%, transparent);
   --badge-text: var(--color-warning);
 }
 
 .info {
   --badge-bg: var(--color-info-soft);
-  --badge-border: rgba(47, 95, 145, 0.2);
+  --badge-border: color-mix(in srgb, var(--color-info) 22%, transparent);
   --badge-text: var(--color-info);
 }
 
 .danger {
   --badge-bg: var(--color-danger-soft);
-  --badge-border: rgba(155, 55, 48, 0.2);
+  --badge-border: color-mix(in srgb, var(--color-danger) 22%, transparent);
   --badge-text: var(--color-danger);
 }

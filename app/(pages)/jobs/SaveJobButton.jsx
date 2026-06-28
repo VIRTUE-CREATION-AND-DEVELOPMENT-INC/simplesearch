@@ -1,15 +1,18 @@
 "use client";
 
-import { useMemo, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 import {
-  readSavedJobsSnapshot,
+  isJobSaved,
   subscribeToSavedJobs,
   toggleSavedJob,
-} from "@/lib/jobs/savedJobsStorage";
+} from "@/lib/saved-jobs/storage";
 
 export function SaveJobButton({ jobId, className = "" }) {
-  const savedSnapshot = useSyncExternalStore(subscribeToSavedJobs, readSavedJobsSnapshot, () => "{}");
-  const saved = useMemo(() => readSavedJobIds(savedSnapshot).includes(jobId), [jobId, savedSnapshot]);
+  const saved = useSyncExternalStore(
+    subscribeToSavedJobs,
+    () => isJobSaved(jobId),
+    () => false,
+  );
 
   function toggleSaved() {
     toggleSavedJob(jobId);
@@ -25,13 +28,4 @@ export function SaveJobButton({ jobId, className = "" }) {
       {saved ? "Saved locally" : "Save locally"}
     </button>
   );
-}
-
-function readSavedJobIds(snapshot) {
-  try {
-    const parsed = JSON.parse(snapshot);
-    return Array.isArray(parsed?.ids) ? parsed.ids.filter((item) => typeof item === "string") : [];
-  } catch {
-    return [];
-  }
 }

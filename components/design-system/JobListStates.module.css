@@ -22,7 +22,7 @@
 
 .loading {
   background:
-    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent),
+    linear-gradient(90deg, transparent, var(--surface-overlay-strong), transparent),
     var(--color-surface-raised);
   background-size: 200% 100%;
   animation: state-shimmer 1.4s linear infinite;
@@ -33,7 +33,7 @@
 }
 
 .error {
-  border-color: rgba(155, 55, 48, 0.25);
+  border-color: var(--color-danger);
   background: var(--color-danger-soft);
 }
 
